@@ -131,3 +131,6 @@ hi SpecialKey ctermbg=NONE
 if &term =~ '256color'
   set t_ut=
 endif
+
+" this is for vim multiple cursor escape issues
+let g:multi_cursor_exit_from_insert_mode = 0
