@@ -164,3 +164,6 @@ let g:multi_cursor_exit_from_insert_mode = 0
 
 " should fix issue on json quote
 let g:vim_json_syntax_conceal = 0
+
+" EMMET with tab expander FTW!
+autocmd FileType html,htmldjango,css,scss,sass imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
