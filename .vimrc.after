@@ -169,7 +169,7 @@ let g:vim_json_syntax_conceal = 0
 autocmd FileType html,htmldjango,css,scss,sass imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " For Ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg ="ack-grep -H --nocolor --nogroup --column"
 nmap <leader>a :tab split<CR>:Ack ""<Left>
 nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
 
