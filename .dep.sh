@@ -13,6 +13,9 @@ curl -Lo- https://bit.ly/janus-bootstrap | bash
 mkdir -p ~/.janus
 cd ~/.janus
 
+# Ack
+git clone https://github.com/mileszs/ack.vim.git
+
 # Vim Powerline
 git clone https://github.com/Lokaltog/vim-powerline.git
 

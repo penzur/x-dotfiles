@@ -30,7 +30,7 @@ set gdefault
 set encoding=utf-8 nobomb
 
 " Don’t add empty newlines at the end of files
-set binary
+set nobinary
 set noeol
 
 " let ; be :
@@ -167,3 +167,12 @@ let g:vim_json_syntax_conceal = 0
 
 " EMMET with tab expander FTW!
 autocmd FileType html,htmldjango,css,scss,sass imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
+" For Ack
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Should fix tabs/space issues
+autocmd Filetype html,php,jade setlocal ts=4 sts=4 sw=4 expandtab
+autocmd Filetype ruby,scala setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 noexpandtab
+autocmd Filetype go,python setlocal ts=4 sts=4 sw=4 noexpandtab
