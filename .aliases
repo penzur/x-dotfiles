@@ -17,7 +17,7 @@ alias j="jobs"
 
 # Git related aliases
 alias ga="git add"
-alias gc="git commit"
+alias gc="git commit -S"
 alias gd="g d"
 alias gl="g l"
 alias gs="git status"
