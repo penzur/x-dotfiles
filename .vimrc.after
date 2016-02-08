@@ -186,3 +186,5 @@ nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
 autocmd Filetype html,python,php,jade setlocal ts=4 sts=4 sw=4 expandtab
 autocmd Filetype ruby,javascript,scala setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
+
+autocmd BufWritePre * :%s/\s\+$//e
