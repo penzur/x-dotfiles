@@ -215,7 +215,7 @@ nmap <leader>r :GoRun<CR>
 
 " Shold fix tabs/space issues
 autocmd Filetype python,html,php,jade setlocal ts=4 sts=4 sw=4 expandtab
-autocmd Filetype javascript,ruby,scala setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype javascript,cucumber,haml,jade,ruby,scala setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
 
 "set t_ti= t_te=
