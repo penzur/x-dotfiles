@@ -24,6 +24,7 @@ else
 	git clone https://github.com/michalliu/jsruntime.vim.git
 	git clone https://github.com/vim-scripts/Align.git
 	git clone https://github.com/tpope/vim-cucumber.git
+	git clone https://github.com/Shougo/neocomplete.vim.git
 
 	git clone https://github.com/morhetz/gruvbox.git
 	git clone https://github.com/zeis/vim-kolor.git

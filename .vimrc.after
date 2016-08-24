@@ -1,17 +1,13 @@
-" Make Vim more useful
-set nocompatible
 " Enable mouse in all modes
-set t_Co=256
 set mouse=a
-set ttymouse=xterm2
-
-let html_no_rendering=1
-set lazyredraw
-set ttyfast
+"set ttymouse=xterm2
 
 " Default colorscheme
-color default
-"set background=dark
+set background=light
+color PaperColor
+
+" Make Vim more useful
+set nocompatible
 
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
@@ -19,18 +15,20 @@ set clipboard=unnamed
 " Enhance command-line completion
 set wildmenu
 
-
 " Allow cursor keys in insert mode
 set esckeys
 
 " Allow backspace in insert mode
 set backspace=indent,eol,start
 
+" Optimize for fast terminal connections
+set ttyfast
+
 " Add the g flag to search/replace by default
 set gdefault
 
 " Use UTF-8 without BOM
-set encoding=utf-8 nobomb
+"set encoding=utf-8 nobomb
 
 " Don’t add empty newlines at the end of files
 set nobinary
@@ -71,7 +69,7 @@ set lbr
 set tw=500
 set ai "Auto indent
 set si "Smart indent
-set wrap! "Wrap lines
+set wrap "Wrap lines
 
 " Respect modeline in files
 set modeline
@@ -82,10 +80,9 @@ set relativenumber
 
 " Enable syntax highlighting
 syntax on
-set omnifunc=syntaxcomplete#Complete
 
 " Highlight current line
-set cursorline
+set nocursorline
 
 " Show “invisible” characters
 set lcs=tab:\ \ ,trail:·,eol:¬,nbsp:_
@@ -125,14 +122,14 @@ set title
 set showcmd
 
 " Start scrolling three lines before the horizontal window border
-"set scrolloff=9
+" set scrolloff=9
 set scroll=3
 
 "folding settings
 set foldmethod=indent   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
-"set foldlevel=0         "this is just what i use
+set foldlevel=1         "this is just what i use
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -161,45 +158,20 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-" Settings for highlights
-"hi SpecialKey ctermbg=NONE
-"hi CursorLine cterm=NONE ctermbg=17
-"hi Visual ctermbg=17
+hi SpecialKey ctermbg=NONE
 
 " this is for vim multiple cursor escape issues
 let g:multi_cursor_exit_from_insert_mode = 0
 
-"function! g:UltiSnips_Complete()
-  "call UltiSnips#ExpandSnippetOrJump()
-  "if g:ulti_expand_or_jump_res == 0
-    "if pumvisible()
-      "return "\<C-N>"
-    "else
-      "return "\<TAB>"
-    "endif
-  "endif
+" should fix issue on json quote
+let g:vim_json_syntax_conceal = 0
 
-  "return ""
-"endfunction
-
-"function! g:UltiSnips_Reverse()
-  "call UltiSnips#JumpBackwards()
-  "if g:ulti_jump_backwards_res == 0
-    "return "\<C-P>"
-  "endif
-
-  "return ""
-"endfunction
-
-"au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-
-let g:clang_library_path = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib"
+" EMMET with tab expander FTW!
+autocmd FileType html,htmldjango,css,scss,sass imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " For Ack
+" Requires `ack` to be installed on your system
+" Make sure to rename `ack-grep` to `ack` on a debian plaftform
 if executable('ag')
 	let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
 elseif executable('ack-grep')
@@ -211,37 +183,33 @@ endif
 nmap <leader>a :tab split<CR>:Ack ""<Left>
 nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
 
-nmap <leader>r :GoRun<CR>
-
-" Shold fix tabs/space issues
-autocmd Filetype python,html,php,jade setlocal ts=4 sts=4 sw=4 expandtab
-autocmd Filetype javascript,cucumber,haml,jade,ruby,scala setlocal ts=2 sts=2 sw=2 expandtab
+" Should fix tabs/space issues
+autocmd Filetype html,python,php setlocal ts=4 sts=4 sw=4 expandtab
+autocmd Filetype ruby,cucumber,javascript,jade,jsx,scala setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
 
-"set t_ti= t_te=
+" Enable cursorcolumn for `haml` files
+autocmd Filetype haml setlocal cursorcolumn
 
-" Removes trailing white spaces on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-hi CursorLine term=NONE cterm=NONE ctermbg=0
-hi Visual term=NONE cterm=NONE ctermbg=17
-hi MatchParen ctermbg=darkgray
+"hi CursorLine term=NONE cterm=NONE ctermbg=0
+"hi Visual term=NONE cterm=NONE ctermbg=17
+"hi MatchParen ctermbg=darkgray
 
-if &term =~ "xterm\\|rxvt"
-	" use an orange cursor in insert mode
-	let &t_SI = "\<Esc>]12;orange\x7"
-	" use a red cursor otherwise
-	let &t_EI = "\<Esc>]12;red\x7"
-	silent !echo -ne "\033]12;red\007"
-	" reset cursor when vim exits
-	autocmd VimLeave * silent !echo -ne "\033]112\007"
-	" use \003]12;gray\007 for gnome-terminal
-endif
+" Dash Awesomness
+:nmap <silent> <leader>d <Plug>DashSearch
+let g:go_fmt_command = "goimports"
 
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+" NEOCOMPLETE
+let g:neocomplete#enable_at_startup = 1
+
+function! Multiple_cursors_before()
+	exe 'NeoCompleteLock'
+	echo 'Disabled autocomplete'
+endfunction
+
+function! Multiple_cursors_after()
+	exe 'NeoCompleteUnlock'
+	echo 'Enabled autocomplete'
+endfunction
