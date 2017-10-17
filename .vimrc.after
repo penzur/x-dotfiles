@@ -1,10 +1,9 @@
-" Enable mouse in all modes
 set mouse=a
+" Enable mouse in all modes
 "set ttymouse=xterm2
 
 " Default colorscheme
-set background=light
-color PaperColor
+color papercolor
 
 " Make Vim more useful
 set nocompatible
@@ -69,7 +68,7 @@ set lbr
 set tw=500
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
+set nowrap "Wrap lines
 
 " Respect modeline in files
 set modeline
@@ -82,7 +81,7 @@ set relativenumber
 syntax on
 
 " Highlight current line
-set nocursorline
+set cursorline
 
 " Show “invisible” characters
 set lcs=tab:\ \ ,trail:·,eol:¬,nbsp:_
@@ -185,24 +184,45 @@ nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
 
 " Should fix tabs/space issues
 autocmd Filetype html,python,php setlocal ts=4 sts=4 sw=4 expandtab
-autocmd Filetype ruby,cucumber,javascript,jade,jsx,scala setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype ruby,cucumber,javascript,jade,pug,jsx,scala,vue.html.javascript.css,css,scss setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
 
 " Enable cursorcolumn for `haml` files
 autocmd Filetype haml setlocal cursorcolumn
 
-autocmd BufWritePre * :%s/\s\+$//e
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go', 'javascript', 'ruby', 'python', 'vue'], 'passive_filetypes': [] }
+" Should fix issue with proprietary tags
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected", " attribute name \":", " attribute name \"@"]
 
-"hi CursorLine term=NONE cterm=NONE ctermbg=0
-"hi Visual term=NONE cterm=NONE ctermbg=17
-"hi MatchParen ctermbg=darkgray
+" Javascript
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_vue_checkers = ['eslint']
+" Override eslint with local version where necessary.
+let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+	let local_eslint = getcwd() . "/" . local_eslint
+endif
+if executable(local_eslint)
+	let g:syntastic_javascript_eslint_exec = local_eslint
+	let g:syntastic_vue_eslint_exec = local_eslint
+endif
+
+" Golang
+let g:go_fmt_command = "goimports"
+let g:go_list_type = "quickfix"
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_fail_silently = 1
+
+let g:syntastic_go_checkers = ['govet', 'errcheck', 'go']
 
 " Dash Awesomness
 :nmap <silent> <leader>d <Plug>DashSearch
-let g:go_fmt_command = "goimports"
-
-" NEOCOMPLETE
-let g:neocomplete#enable_at_startup = 1
 
 function! Multiple_cursors_before()
 	exe 'NeoCompleteLock'
@@ -213,3 +233,19 @@ function! Multiple_cursors_after()
 	exe 'NeoCompleteUnlock'
 	echo 'Enabled autocomplete'
 endfunction
+
+set colorcolumn=80
+hi CursorLine cterm=NONE term=NONE
+let g:ctrlp_extensions = ['funky']
+
+" Trim extra space
+autocmd BufWritePre * %s/\s\+$//e
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+let g:jsx_ext_required = 0
