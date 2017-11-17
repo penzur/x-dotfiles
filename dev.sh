@@ -13,16 +13,6 @@ brew install macvim --with-lua --with-override-system-vim --with-luajit --with-p
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
-######################################################
-# Z
-# -
-# https://github.com/rupa/z
-######################################################
-mkdir -p ~/.bin
-cd ~/.bin
-git clone https://github.com/rupa/z.git
-chmod +x ~/.bin/z/z.sh
-
 # Vim plugins
 git clone https://github.com/vim-scripts/Align.git ~/.vim/bundle/
 git clone https://github.com/vim-scripts/Align.git ~/.vim/bundle/
@@ -102,3 +92,16 @@ git clone https://github.com/darthmall/vim-vue.git ~/.vim/bundle/
 git clone https://github.com/darthmall/vim-vue.git ~/.vim/bundle/
 git clone https://github.com/sekel/vim-vue-syntastic.git ~/.vim/bundle/
 git clone https://github.com/sekel/vim-vue-syntastic.git ~/.vim/bundle/
+
+# Fonts
+sudo cp ./fonts/* ~/Library/Fonts/
+
+######################################################
+# Z
+# -
+# https://github.com/rupa/z
+######################################################
+mkdir -p ~/.bin
+cd ~/.bin
+git clone https://github.com/rupa/z.git
+chmod +x ~/.bin/z/z.sh
