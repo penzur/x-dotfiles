@@ -2,7 +2,7 @@
 cd "$(dirname "${BASH_SOURCE}")"
 
 # Setup janus first
-source janus.sh
+source dev.sh
 
 git pull origin master
 function doIt() {
