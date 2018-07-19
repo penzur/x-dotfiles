@@ -65,5 +65,5 @@ function git_info() {
 	echo -ne " $branch$MAGENTA$dirty $RESET"
 }
 
-export PS1="\n\[$BLUE\]\w\[$RESET\]\n\[$PURPLE\]\$(git_info)\[$WHITE\]%\[$RESET\] "
+export PS1="\n\[$BLUE\]\w\[$RESET\]\n\[$PURPLE\]\$(git_info)\[$WHITE\]🦄\[$RESET\] "
 export PS2="\[$ORANGE\]→ \[$RESET\]"
