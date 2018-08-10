@@ -57,13 +57,10 @@ function git_info() {
 	branch=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
 
 	# check if it's dirty (via github.com/sindresorhus/pure)
-	git diff --quiet --ignore-submodules HEAD &>/dev/null
-	if [[ $? -eq 1 ]];then
-		dirty="*"
-	fi
+	dirty=$(git diff --quiet --ignore-submodules HEAD &>/dev/null; [ $? -eq 1 ]&& echo -e "*")
 
-	echo -ne " $branch$MAGENTA$dirty $RESET"
+	echo -e $branch$dirty" "
 }
 
-export PS1="\n\[$BLUE\]\w\[$RESET\]\n\[$PURPLE\]\$(git_info)\[$WHITE\]🦄\[$RESET\] "
+export PS1="\n\[$BLUE\]\w\[$RESET\]\n\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"\[$PURPLE\] \")\$(git_info)\[$WHITE\]%\[$RESET\] "
 export PS2="\[$ORANGE\]→ \[$RESET\]"
